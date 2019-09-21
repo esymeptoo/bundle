@@ -1,0 +1,57 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .main button {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <button class="build-demo" data-target="build-demo1">构建demo1</button>
+    <br>
+    <button class="build-demo" data-target="build-demo2">构建demo2</button>
+    <br>
+    <button class="build-demo" data-target="build-demo3">构建demo3</button>
+    <br>
+    <button class="build-demo" data-target="build-demo4">构建demo4</button>
+    <br>
+  </div>
+
+  <script>
+    const wrapper = document.querySelector('.main')
+    Array.prototype.forEach.call(document.getElementsByClassName('build-demo'), btn => {
+      btn.addEventListener('click', function (e) {
+        const { target: buildTarget } = e.target.dataset
+        e.target.innerHTML = `正在构建${buildTarget}...`
+        fetch('http://localhost:3000/build/', {
+          method: 'POST',
+          body: JSON.stringify({ commander: buildTarget }),
+        })
+          .then(res => res.text())
+          .then(() => {
+            e.target.innerHTML = `构建成功， 重新构建${buildTarget.replace(/build-/, '')}`
+            createLink(`http://localhost:63342/bundle/dist/${buildTarget.replace(/build-/, '')}/index.html`, buildTarget, wrapper, e.target)
+          })
+          .catch(err => {
+            e.target.innerHTML = `构建失败， 重新构建${buildTarget}`
+            alert(err.message)
+          })
+      })
+    })
+
+    function createLink(href, value,  container, targetNode) {
+      const link = document.createElement('a')
+      link.href = href
+      link.target = '_blank'
+      link.innerHTML = value
+      container.insertBefore(link, targetNode)
+    }
+  </script>
+</body>
+</html>

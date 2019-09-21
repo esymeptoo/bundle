@@ -1,0 +1,29 @@
+{
+  "name": "bundle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "setup": "nodemon service.js",
+    "dev": "cross-env NODE_ENV=dev webpack-dev-server",
+    "build-demo1": "rm -rf dist/demo1 && cross-env NODE_ENV=prod OUT_DIR=demo1 webpack --inline",
+    "build-demo2": "rm -rf dist/demo2 && cross-env NODE_ENV=prod OUT_DIR=demo2 webpack --inline",
+    "build-demo3": "rm -rf dist/demo3 && cross-env NODE_ENV=prod OUT_DIR=demo3 webpack --inline",
+    "build-demo4": "rm -rf dist/demo4 && cross-env NODE_ENV=prod OUT_DIR=demo4 webpack --inline",
+    "build-demo5": "rm -rf dist/demo5 && cross-env NODE_ENV=prod OUT_DIR=demo5 webpack --inline"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "jquery": "^3.4.1",
+    "nodemon": "^1.19.1",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2",
+    "webpack-manifest-plugin": "^2.0.4"
+  },
+  "dependencies": {
+    "querystring": "^0.2.0"
+  }
+}
